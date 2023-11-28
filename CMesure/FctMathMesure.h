@@ -1,62 +1,57 @@
-// test de sécurité pour éviter l'inclusion multiple des définitions
+// test de sï¿½curitï¿½ pour ï¿½viter l'inclusion multiple des dï¿½finitions
 #ifndef _FCTMATHMESURE_H_
 #define _FCTMATHMESURE_H_
 
 #include "CMesure.h"
 
-#ifdef _FCTMATHMESURE_EXPORTING
-	#define FCTMATHMESURE_DECLSPEC __declspec(dllexport)
-#else
-	#define FCTMATHMESURE_DECLSPEC __declspec(dllimport)
-#endif
 
-///////////////////////////// Fonctions mathématiques //////////////////////////
+///////////////////////////// Fonctions mathï¿½matiques //////////////////////////
 
-// Les fonctions suivantes nécessite l'utilisation
+// Les fonctions suivantes nï¿½cessite l'utilisation
 // de la loi de propagation des incertitudes.
-// cf norme NF ENV 13005 (Guide d'Utilisation de la Métrologie : GUM)
+// cf norme NF ENV 13005 (Guide d'Utilisation de la Mï¿½trologie : GUM)
 
-// 1 - ce groupe de fonction est à une seule variable,
-// ce qui donne, pour l'équation y = f(x), la formule suivante:
-// U²(y) = [df(x)/dx]² * U²(x)
+// 1 - ce groupe de fonction est ï¿½ une seule variable,
+// ce qui donne, pour l'ï¿½quation y = f(x), la formule suivante:
+// Uï¿½(y) = [df(x)/dx]ï¿½ * Uï¿½(x)
 
-	FCTMATHMESURE_DECLSPEC CMesure fabs (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure sin  (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure cos  (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure tan  (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure acos (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure asin (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure atan (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure cosh (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure sinh (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure tanh (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure log  (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure log10(CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure exp  (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure sqrt (CMesure& M);
+	CMesure fabs (CMesure& M);
+	CMesure sin  (CMesure& M);
+	CMesure cos  (CMesure& M);
+	CMesure tan  (CMesure& M);
+	CMesure acos (CMesure& M);
+	CMesure asin (CMesure& M);
+	CMesure atan (CMesure& M);
+	CMesure cosh (CMesure& M);
+	CMesure sinh (CMesure& M);
+	CMesure tanh (CMesure& M);
+	CMesure log  (CMesure& M);
+	CMesure log10(CMesure& M);
+	CMesure exp  (CMesure& M);
+	CMesure sqrt (CMesure& M);
 
-	FCTMATHMESURE_DECLSPEC CMesure ceil (CMesure& M);
-	FCTMATHMESURE_DECLSPEC CMesure floor(CMesure& M);
+	CMesure ceil (CMesure& M);
+	CMesure floor(CMesure& M);
 
 
-// 2 - ce groupe de fonction est à deux variables,
-// ce qui donne, pour l'équation y = f(x,y), la formule suivante:
-// U²(y) = [df(x)/dx]² * U²(x) + [df(y)/dy]² * U²(y)
+// 2 - ce groupe de fonction est ï¿½ deux variables,
+// ce qui donne, pour l'ï¿½quation y = f(x,y), la formule suivante:
+// Uï¿½(y) = [df(x)/dx]ï¿½ * Uï¿½(x) + [df(y)/dy]ï¿½ * Uï¿½(y)
 
-	FCTMATHMESURE_DECLSPEC CMesure pow  (CMesure& Base, CMesure& Puiss);
-	FCTMATHMESURE_DECLSPEC CMesure pow  (double   Base, CMesure& Puiss);
-	FCTMATHMESURE_DECLSPEC CMesure pow  (CMesure& Base, double   Puiss);
+	CMesure pow  (CMesure& Base, CMesure& Puiss);
+	CMesure pow  (double   Base, CMesure& Puiss);
+	CMesure pow  (CMesure& Base, double   Puiss);
 
-	FCTMATHMESURE_DECLSPEC CMesure atan2(CMesure& X, CMesure& Y);
-	FCTMATHMESURE_DECLSPEC CMesure modf (CMesure& X, CMesure* Fpart);
+	CMesure atan2(CMesure& X, CMesure& Y);
+	CMesure modf (CMesure& X, CMesure* Fpart);
 
-// 3 - ce groupe de fonction me pose problème pour déterminer
+// 3 - ce groupe de fonction me pose problï¿½me pour dï¿½terminer
 // comment calculer l'incertitude type. Je vais certainement faire
-// un choix personnel unilatérale parfaitement arbitraire.
+// un choix personnel unilatï¿½rale parfaitement arbitraire.
 
-	FCTMATHMESURE_DECLSPEC CMesure MIN  (CMesure& A, CMesure& B);
-	FCTMATHMESURE_DECLSPEC CMesure MAX  (CMesure& A, CMesure& B);
-	FCTMATHMESURE_DECLSPEC CMesure SIGN (CMesure& A);
+	CMesure MIN  (CMesure& A, CMesure& B);
+	CMesure MAX  (CMesure& A, CMesure& B);
+	CMesure SIGN (CMesure& A);
 
 	
 #endif	// fin de _FCTMATHMESURE_H_

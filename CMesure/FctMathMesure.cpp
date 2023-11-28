@@ -1,26 +1,24 @@
 #include <cmath>
 
-#define _CMESURE_EXPORTING
 #include "CMesure.h"
 
-#define _FCTMATHMESURE_EXPORTING
 #include "FctMathMesure.h"
 
 using namespace std;
 
 ////////////////////////////////////////////////////////////////////////////////
-///////////////////////////// Fonctions mathématiques //////////////////////////
+///////////////////////////// Fonctions mathï¿½matiques //////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// fonctions à une variable //
-// U²(y) = [df(x)/dx]² * U²(x)
+// fonctions ï¿½ une variable //
+// Uï¿½(y) = [df(x)/dx]ï¿½ * Uï¿½(x)
 
 CMesure fabs (CMesure& M) 
 {
 	// si M.Val() <  0 => fabs(M.Val()) = -1.0 * M.Val() et df = -1
 	// si M.Val() >= 0 => fabs(M.Val()) =  1.0 * M.Val() et df =  1
-	// dans tous les cas, lorsque df sera élevé au carré, df² = 1
-	// => U²(x) = sqrt(M.Eps() * M.Eps()) = fabs(M. Eps())
+	// dans tous les cas, lorsque df sera ï¿½levï¿½ au carrï¿½, dfï¿½ = 1
+	// => Uï¿½(x) = sqrt(M.Eps() * M.Eps()) = fabs(M. Eps())
 
 	return CMesure(
 		(double)fabs(M.Val()), 
@@ -56,7 +54,7 @@ CMesure cos  (CMesure& M)
 
 CMesure tan  (CMesure& M)
 {
-	// d[tan(x)] = 1 + tan²(x)
+	// d[tan(x)] = 1 + tanï¿½(x)
 	
 	double df;
 	df = 1.0 + (double)tan(M.Val()) * (double)tan(M.Val());
@@ -69,7 +67,7 @@ CMesure tan  (CMesure& M)
 
 CMesure acos (CMesure& M)
 {
-	// d[acos(x)] = -1 / rac(1 - x²)
+	// d[acos(x)] = -1 / rac(1 - xï¿½)
 	
 	double df;
 	df = (double) ( (-1.0) / ((double)sqrt(1.0 - M.Val() * M.Val())) );
@@ -82,7 +80,7 @@ CMesure acos (CMesure& M)
 
 CMesure asin (CMesure& M)
 {
-	// d[asin(x)] = 1 / rac(1 - x²)
+	// d[asin(x)] = 1 / rac(1 - xï¿½)
 	
 	double df;
 	df = (double) ( (1.0) / ((double)sqrt(1.0 - M.Val() * M.Val())) );
@@ -95,7 +93,7 @@ CMesure asin (CMesure& M)
 
 CMesure atan (CMesure& M)
 {
-	// d[atan(x)] = 1 / (1 - x²)
+	// d[atan(x)] = 1 / (1 - xï¿½)
 	
 	double df;
 	df = (double) ( (1.0) / (1.0 - M.Val() * M.Val()) );
@@ -134,7 +132,7 @@ CMesure sinh (CMesure& M)
 
 CMesure tanh (CMesure& M)
 {
-	// d[tanh(x)] = 1 + tanh²(x)
+	// d[tanh(x)] = 1 + tanhï¿½(x)
 	
 	double df;
 	df = 1.0 + (double)tanh(M.Val()) * (double)tanh(M.Val());
@@ -199,20 +197,20 @@ CMesure sqrt (CMesure& M)
 		M.Alpha());
 }
 
-// Le calcul d'epsilon pour floor et ceil a posé plusieurs questions:
-//		1) Application d'un coeff de proportionnalité newVal/oldVal ?
-//		2) Considérer qu'une valeur seuillée possède un epsilon nul 
+// Le calcul d'epsilon pour floor et ceil a posï¿½ plusieurs questions:
+//		1) Application d'un coeff de proportionnalitï¿½ newVal/oldVal ?
+//		2) Considï¿½rer qu'une valeur seuillï¿½e possï¿½de un epsilon nul 
 //		   car c'est une valeure certaine ?
 //		3) Augmenter epsilon de suffisament pour conserver l'ancien IT
-//		   dans un nouveau centré en newVal ?
+//		   dans un nouveau centrï¿½ en newVal ?
 //
-// Résultat de mes réflexions : 
-//		Solution 1 : problème identifier si floor ou ceil retourne 0.0 car 
+// Rï¿½sultat de mes rï¿½flexions : 
+//		Solution 1 : problï¿½me identifier si floor ou ceil retourne 0.0 car 
 //		cela provoque un epsilon infini => REFUSEE
-//		Solution 2 : supprimer de façon artificielle une incertitude sur
-//		une mesure est contraire à la philosophie de cette classe => REFUSEE
+//		Solution 2 : supprimer de faï¿½on artificielle une incertitude sur
+//		une mesure est contraire ï¿½ la philosophie de cette classe => REFUSEE
 //		Solution 3 : c'est la moins pire, selon moi, elle offre un compromis 
-//		acceptable entre la philosophie de cette classe et les loies mathématiques
+//		acceptable entre la philosophie de cette classe et les loies mathï¿½matiques
 //		sous jacente
 
 CMesure ceil (CMesure& M)
@@ -233,8 +231,8 @@ CMesure floor(CMesure& M)
 	return CMesure(valeur, epsilon, alpha);
 }
 
-// fonctions à deux variables //
-// U²(y) = [df(x)/dx]² * U²(x) + [df(y)/dy]² * U²(y)
+// fonctions ï¿½ deux variables //
+// Uï¿½(y) = [df(x)/dx]ï¿½ * Uï¿½(x) + [df(y)/dy]ï¿½ * Uï¿½(y)
 
 CMesure pow(CMesure& Base, CMesure& Puiss)
 {
@@ -270,25 +268,25 @@ CMesure modf (CMesure& X, CMesure* Fpart)
 }
 
 
-// Ce groupe de fonction me pose problème pour déterminer
+// Ce groupe de fonction me pose problï¿½me pour dï¿½terminer
 // comment calculer l'incertitude type. Je vais certainement faire
-// un choix personnel unilatérale parfaitement arbitraire.
+// un choix personnel unilatï¿½rale parfaitement arbitraire.
 
-// Pour une incertitude de mesure les MIN et MAX ne sont pas symétriques
-// Etant donné que les inégalités font intervenir les IT, il y a trois cas :
+// Pour une incertitude de mesure les MIN et MAX ne sont pas symï¿½triques
+// Etant donnï¿½ que les inï¿½galitï¿½s font intervenir les IT, il y a trois cas :
 // -> A<B
 // -> A>B
-// -> A potentiellement égal à B : donc A ni inff ni supp à B mais A.val != B.val
-// Dans ce troisième cas, faut-il
-// 1) retourner A ? (puisque indécidable donc potentiellement équivalent)
-// 2) retourner B ? (puisque indécidable donc potentiellement équivalent)
-// 3) une autre valeur => choix unilatéral personnel parfaitement arbitraire de retourner la moyenne des deux ... et je vous emmerde
+// -> A potentiellement ï¿½gal ï¿½ B : donc A ni inff ni supp ï¿½ B mais A.val != B.val
+// Dans ce troisiï¿½me cas, faut-il
+// 1) retourner A ? (puisque indï¿½cidable donc potentiellement ï¿½quivalent)
+// 2) retourner B ? (puisque indï¿½cidable donc potentiellement ï¿½quivalent)
+// 3) une autre valeur => choix unilatï¿½ral personnel parfaitement arbitraire de retourner la moyenne des deux ... et je vous emmerde
 
 CMesure MIN (CMesure& A, CMesure& B)
 { 
 	CMesure R;
 
-	if (A == B)	    { R = (A + B) / 2.0; }	// cas indécidable
+	if (A == B)	    { R = (A + B) / 2.0; }	// cas indï¿½cidable
 	else if (A < B) { R = A; }				// A < B
 	else            { R = B; }				// A > B
 	
@@ -299,7 +297,7 @@ CMesure MAX (CMesure& A, CMesure& B)
 { 
 	CMesure R;
 
-	if (A == B)	    { R = (A + B) / 2.0; }	// cas indécidable
+	if (A == B)	    { R = (A + B) / 2.0; }	// cas indï¿½cidable
 	else if (A < B) { R = B; }				// A < B
 	else            { R = A; }				// A > B
 	

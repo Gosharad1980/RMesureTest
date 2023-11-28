@@ -6,8 +6,16 @@
 #![allow(unused_assignments)]
 // Ending ta_gueule_le_compilo
 
-fn main()
+
+#[derive(Debug)]
+struct RMesure
 {
-    let chaine : String = String::from("Yo!");
-    println!("Hello, world!");
+	valeur : usize,
+	epsilon : usize,
+	alpha : usize
+}
+
+impl RMesure
+{
+	
 }

@@ -1,4 +1,4 @@
-// Cette ligne est spécifique à Visual C++
+// Cette ligne est spï¿½cifique ï¿½ Visual C++
 // pour pouvoir utiliser le sscanf
 #define _CRT_SECURE_NO_DEPRECATE
 
@@ -6,12 +6,11 @@
 #include <stdio.h>
 #include <float.h>
 /*
-=> float.h est utilisée pour :
+=> float.h est utilisï¿½e pour :
 	#define DBL_EPSILON     2.2204460492503131e-016 // smallest such that 1.0+DBL_EPSILON != 1.0
 	#define DBL_MAX         1.7976931348623158e+308 // MAXI value
 */
 
-#define _CMESURE_EXPORTING	// pour créer une DLL
 #include "CMesure.h"
 
 using namespace std;
@@ -20,7 +19,7 @@ using namespace std;
 #define CMESURE_EPS DBL_EPSILON
 
 /////////////////////////////////////////////////////////////////////////////////
-/////////////////// Pour éviter les problèmes de compilation ////////////////////
+/////////////////// Pour ï¿½viter les problï¿½mes de compilation ////////////////////
 /////////////////////////////////////////////////////////////////////////////////
 
 double MINI(double a, double b) { return (((a)<(b)) ? (a) : (b)); }
@@ -32,7 +31,7 @@ double SIGN(double a)			{ return (((a)>=0) ? (1) : (-1)); }
 ///////////////////////// Constructeurs et destructeur /////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-// constructeur par défaut
+// constructeur par dï¿½faut
 CMesure::CMesure()
 {
 	this->valeur  = 0.0;
@@ -48,7 +47,7 @@ CMesure::CMesure(double v)
 	this->alpha   = 95.45;
 }
 
-// construction d'une mesure en passant tous les paramètres
+// construction d'une mesure en passant tous les paramï¿½tres
 CMesure::CMesure(double v, double e, double a)
 {
 	this->valeur  = v;
@@ -56,7 +55,7 @@ CMesure::CMesure(double v, double e, double a)
 	this->alpha   = a;
 }
 
-// Permet de creer une mesure à partir d'une sauvegarde texte
+// Permet de creer une mesure ï¿½ partir d'une sauvegarde texte
 CMesure::CMesure(char* m)                     
 {
 	double v, it, a;
@@ -66,17 +65,17 @@ CMesure::CMesure(char* m)
 	this->epsilon = fabs(it/this->K());
 }
 
-// permet de créer une mesure à partir d'une loi de distribution connue
+// permet de crï¿½er une mesure ï¿½ partir d'une loi de distribution connue
 CMesure::CMesure(double v, double it, char loi)
 {
-	// Dans le cadre de mesures effectuées dans des conditions bien identifiées,
-	// il est possible d'estimer l'incertitude type directement à partir de
-	// l'intervalle de tolérance à l'aide des lois suivante
+	// Dans le cadre de mesures effectuï¿½es dans des conditions bien identifiï¿½es,
+	// il est possible d'estimer l'incertitude type directement ï¿½ partir de
+	// l'intervalle de tolï¿½rance ï¿½ l'aide des lois suivante
 	//
-	//		1) 'R' : Résolution d'un indicateur numérique     : epsilon = it / rac(12.0)
-	//		2) 'H' : Hystérésis tel que it = MAXI - MINI        : epsilon = it / rac(12.0)
-	//		3) 'S' : évolution Sinusoïdale sur it = MAXI - MINI : epsilon = it / 1.4
-	//		4) 'N' : loi Normale par défaut, K = 2            : epsilon = it / 2.0
+	//		1) 'R' : Rï¿½solution d'un indicateur numï¿½rique     : epsilon = it / rac(12.0)
+	//		2) 'H' : Hystï¿½rï¿½sis tel que it = MAXI - MINI        : epsilon = it / rac(12.0)
+	//		3) 'S' : ï¿½volution Sinusoï¿½dale sur it = MAXI - MINI : epsilon = it / 1.4
+	//		4) 'N' : loi Normale par dï¿½faut, K = 2            : epsilon = it / 2.0
 	//		5) 'C' : appareil de Classe +/- it                : epsilon = it / rac(3.0)
 
 	this->valeur = v;
@@ -88,7 +87,7 @@ CMesure::CMesure(double v, double it, char loi)
 		case 'H' : this->epsilon = fabs(it / sqrt(12.0)); break;
 		case 'S' : this->epsilon = fabs(it / 1.4)       ; break;
 		case 'C' : this->epsilon = fabs(it / sqrt(3.0)) ; break;
-		case 'N' : // c'est la loi par défaut dans tout bon certificat d'étalonnage qui se respecte
+		case 'N' : // c'est la loi par dï¿½faut dans tout bon certificat d'ï¿½talonnage qui se respecte
 		default  : this->epsilon = fabs(it / 2.0)       ; break;
 	}
 }
@@ -105,12 +104,12 @@ CMesure::CMesure(const CMesure& X)
 // destructeur => vide car il n'y a aucune allocations dynamiques 
 CMesure::~CMesure() 
 {
-	// Pas d'allocations dynamiques ... donc rien à détruire.
+	// Pas d'allocations dynamiques ... donc rien ï¿½ dï¿½truire.
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
-////////////////// Accesseurs aux données privées de la classe /////////////////
+////////////////// Accesseurs aux donnï¿½es privï¿½es de la classe /////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 double CMesure::Val  (void) { return this->valeur;              }
@@ -118,11 +117,11 @@ double CMesure::Alpha(void) { return this->alpha;               }
 double CMesure::Eps  (void) { return this->epsilon;             }
 double CMesure::IT   (void) { return this->epsilon * this->K(); }
 
-// Coeff d'élargissement calculé en fct de alpha
+// Coeff d'ï¿½largissement calculï¿½ en fct de alpha
 double CMesure::K(void)
 {
-	// Calcul par interpolation du coeff d'élargissement à l'aide
-	// des valeurs décrites dans la norme "NF ENV 13005"
+	// Calcul par interpolation du coeff d'ï¿½largissement ï¿½ l'aide
+	// des valeurs dï¿½crites dans la norme "NF ENV 13005"
     double p[8] = { 99.95 , 99.73 , 99.00 , 95.45 , 95.00 , 90.00 , 68.27 , 0.000 };
     double k[8] = { 4.000 , 3.000 , 2.576 , 2.000 , 1.960 , 1.645 , 1.000 , 0.000 };
 
@@ -132,7 +131,7 @@ double CMesure::K(void)
     // Recherche du cadran dans lequel on se situe
 	for(i=1; i<8; i++) if(this->alpha >= p[i]) break;
 
-	// Interpolation de la valeur du coefficient d'élargissement
+	// Interpolation de la valeur du coefficient d'ï¿½largissement
     a = (k[i] - k[i-1]) / (p[i] - p[i-1]);
     b = k[i-1] - (a * p[i-1]);
 
@@ -140,12 +139,12 @@ double CMesure::K(void)
 }
     
 ////////////////////////////////////////////////////////////////////////////////
-//////////////////////// surdéfinition des opérateurs //////////////////////////
+//////////////////////// surdï¿½finition des opï¿½rateurs //////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 CMesure  CMesure::operator+ (const CMesure& M) const
 {
-	// U²(this + M) = U²(this) + U²(M)
+	// Uï¿½(this + M) = Uï¿½(this) + Uï¿½(M)
 	
 	CMesure R;
 
@@ -158,7 +157,7 @@ CMesure  CMesure::operator+ (const CMesure& M) const
 
 CMesure& CMesure::operator+=(const CMesure& M)
 {
-    // U²(this + M) = U²(this) + U²(M)
+    // Uï¿½(this + M) = Uï¿½(this) + Uï¿½(M)
 	
 	(*this) = (*this) + M;
     return (*this);
@@ -179,7 +178,7 @@ CMesure& CMesure::operator+=(const double&  V)
 
 CMesure  CMesure::operator- (const CMesure& M) const
 {
-    // U²(this - M) = U²(this) + U²(M)
+    // Uï¿½(this - M) = Uï¿½(this) + Uï¿½(M)
 	
 	CMesure R;
 
@@ -191,7 +190,7 @@ CMesure  CMesure::operator- (const CMesure& M) const
 }
 CMesure& CMesure::operator-=(const CMesure& M)
 {
-    // U²(this - M) = U²(this) + U²(M)
+    // Uï¿½(this - M) = Uï¿½(this) + Uï¿½(M)
 
 	(*this) = (*this) - M;
     return (*this);    
@@ -212,7 +211,7 @@ CMesure& CMesure::operator-=(const double&  V)
 
 CMesure  CMesure::operator* (const CMesure& M) const
 {
-    // U(R) = sqrt((U(this)² * M²) + (this² * U(M)²))
+    // U(R) = sqrt((U(this)ï¿½ * Mï¿½) + (thisï¿½ * U(M)ï¿½))
 
 	CMesure R;
 	
@@ -225,7 +224,7 @@ CMesure  CMesure::operator* (const CMesure& M) const
 
 CMesure& CMesure::operator*=(const CMesure& M)
 {
-    // U(R) = sqrt((U(this)² * M²) + (this² * U(M)²))
+    // U(R) = sqrt((U(this)ï¿½ * Mï¿½) + (thisï¿½ * U(M)ï¿½))
 
 	(*this) = (*this) * M;
     return (*this);
@@ -247,10 +246,10 @@ CMesure& CMesure::operator*=(const double&  V)
 CMesure  CMesure::operator/ (const CMesure& M) const
 {
 
-	// U(R) = sqrt((U(this)² * M²) + (this² * U(M)²)) * (1 / M²) 
+	// U(R) = sqrt((U(this)ï¿½ * Mï¿½) + (thisï¿½ * U(M)ï¿½)) * (1 / Mï¿½) 
 	// CAS DE LA DIVISION DE/PAR ZERO !!! (traite l'infinie comme une valeur)
-	//		R.valeur = +/-inf si dénominateur nul
-	//		eps = +inf si dénom est nul
+	//		R.valeur = +/-inf si dï¿½nominateur nul
+	//		eps = +inf si dï¿½nom est nul
 
 	CMesure R;
 	
@@ -278,13 +277,13 @@ CMesure& CMesure::operator/=(const CMesure& M)
 
 CMesure  CMesure::operator/ (const double&  V) const
 {
-	// une constante est une mesure dont l'incertitude vaut zéro
+	// une constante est une mesure dont l'incertitude vaut zï¿½ro
 	return (*this) / CMesure(V);
 }
 
 CMesure& CMesure::operator/=(const double&  V)
 {
-	// une constante est une mesure dont l'incertitude vaut zéro
+	// une constante est une mesure dont l'incertitude vaut zï¿½ro
 	(*this) = (*this) / CMesure(V);
 	return (*this);
 }
@@ -308,10 +307,10 @@ CMesure& CMesure::operator= (const double&  V)
 /////////////////////////////////////////////////////////////////////////////////
 
 //
-// Dans cette classe, les mesures sont considérées comme des
-// variables aléatoires, effectuer un test d'ordonnancement
-// entre deux mesures revient à effectuer un test statistique
-// entre deux variables aléatoires.
+// Dans cette classe, les mesures sont considï¿½rï¿½es comme des
+// variables alï¿½atoires, effectuer un test d'ordonnancement
+// entre deux mesures revient ï¿½ effectuer un test statistique
+// entre deux variables alï¿½atoires.
 //
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -320,7 +319,7 @@ CMesure& CMesure::operator= (const double&  V)
 //           -------------------------------------------------                 //
 //                                                                             //
 //   -> Calcul de R = A - B                                                    //
-//   -> contrôle de la position du résultat par rapport à son propre IT        //
+//   -> contrï¿½le de la position du rï¿½sultat par rapport ï¿½ son propre IT        //
 //                                                                             //
 //                                                                             //
 //                     -IT(A-B)       0      +IT(A-B)                          //
@@ -342,13 +341,13 @@ CMesure& CMesure::operator= (const double&  V)
 bool CMesure::operator==(const CMesure& M) const
 { 
 	//
-	// Dans cette classe, les mesures sont considérées comme des
-	// variables aléatoires : tester si A == B revient à effectuer,
-	// ce que l'on nomme en statistique, un test bilatéral.
+	// Dans cette classe, les mesures sont considï¿½rï¿½es comme des
+	// variables alï¿½atoires : tester si A == B revient ï¿½ effectuer,
+	// ce que l'on nomme en statistique, un test bilatï¿½ral.
 	//
-	// Cela consiste à calculer la VA équivalente à la différence des
-	// deux VA testées et à vérifier que sa moyenne est comprise dans
-	// son propre intervalle de tolérance centré en zéro.
+	// Cela consiste ï¿½ calculer la VA ï¿½quivalente ï¿½ la diffï¿½rence des
+	// deux VA testï¿½es et ï¿½ vï¿½rifier que sa moyenne est comprise dans
+	// son propre intervalle de tolï¿½rance centrï¿½ en zï¿½ro.
 	//
 	CMesure D;
 	D = (*this) - M;
@@ -361,7 +360,7 @@ bool CMesure::operator>=(const CMesure& M) const { return !((*this) <  M); }
 
 bool CMesure::operator< (const CMesure& M) const 
 {
-	// tester est-ce que (A < B) consiste à vérifier si
+	// tester est-ce que (A < B) consiste ï¿½ vï¿½rifier si
 	// 1) A et B sont significativement diffentes
 	// 2) A.valeur < B.valeur
 
@@ -372,7 +371,7 @@ bool CMesure::operator< (const CMesure& M) const
 
 bool CMesure::operator>( const CMesure& M) const
 {
-	// tester est-ce que (A > B) consiste à vérifier si
+	// tester est-ce que (A > B) consiste ï¿½ vï¿½rifier si
 	// 1) A et B sont significativement diffentes
 	// 2) A.valeur > B.valeur
 
