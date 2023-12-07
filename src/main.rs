@@ -6,6 +6,7 @@
 #![allow(unused_assignments)]
 // Ending ta_gueule_le_compilo
 
+
 fn main()
 {
     let chaine : String = String::from("Yo!");
