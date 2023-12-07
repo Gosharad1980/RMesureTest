@@ -6,9 +6,10 @@
 #![allow(unused_assignments)]
 // Ending ta_gueule_le_compilo
 
+use RMesure::RMesure;
 
 fn main()
 {
-    let chaine : String = String::from("Yo!");
-    println!("Hello, world!");
+    let UneMesure : RMesure = RMesure { valeur : 0.618, epsilon : 0.001, alpha : 0.95 };
+    println!("Mesure est {:#?}\n", UneMesure);
 }

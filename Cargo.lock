@@ -3,5 +3,12 @@
 version = 3
 
 [[package]]
+name = "RMesure"
+version = "0.1.0"
+
+[[package]]
 name = "RMesureTest"
 version = "0.1.0"
+dependencies = [
+ "RMesure",
+]
