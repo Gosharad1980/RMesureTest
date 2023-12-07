@@ -10,6 +10,6 @@ use RMesure::RMesure;
 
 fn main()
 {
-    let UneMesure : RMesure = RMesure { valeur : 0.618, epsilon : 0.001, alpha : 0.95 };
-    println!("Mesure est {:#?}\n", UneMesure);
+    let UneMesure : RMesure = RMesure { valeur : 0.618, epsilon : 0.001, alpha : 95.0 };
+    println!("( {} +/- {} | {}% )", UneMesure.Val(), UneMesure.IT(), UneMesure.Alpha());
 }
