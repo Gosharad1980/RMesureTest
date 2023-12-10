@@ -13,7 +13,13 @@ fn main()
     let AutreMesure: RMesure = RMesure::new(0.618, 0.001, 95.45);
     let MesureLegal: RMesure = RMesure::loi(0.382, 0.001, 'R');
 
+    let mut MesureLabo: RMesure;
+    let mut Mesure_clone: RMesure;
+
+    Mesure_clone = AutreMesure.clone();
+    MesureLabo = Mesure_clone;
 
     println!("( {} +/- {} | {}% )", MesureLegal.Val(), MesureLegal.IT(), MesureLegal.Alpha());
+    println!("( {} +/- {} | {}% )", Mesure_clone.Val(), Mesure_clone.IT(), Mesure_clone.Alpha());
     
 }
