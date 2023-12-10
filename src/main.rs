@@ -10,6 +10,10 @@ use RMesure::RMesure;
 
 fn main()
 {
-    let UneMesure : RMesure = RMesure { valeur : 0.618, epsilon : 0.001, alpha : 95.0 };
-    println!("( {} +/- {} | {}% )", UneMesure.Val(), UneMesure.IT(), UneMesure.Alpha());
+    let AutreMesure: RMesure = RMesure::new(0.618, 0.001, 95.45);
+    let MesureLegal: RMesure = RMesure::loi(0.382, 0.001, 'R');
+
+
+    println!("( {} +/- {} | {}% )", MesureLegal.Val(), MesureLegal.IT(), MesureLegal.Alpha());
+    
 }
