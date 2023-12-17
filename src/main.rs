@@ -48,9 +48,9 @@ fn main()
 	println!("b != c [ FAUX ] => {}", b!=c); // insignificativement diff�rents
     println!("");
 
+	println!("c < b  [ FAUX ] => {}", c<b); // insignificativement diff�rents
 	println!("a < d  [ VRAI ] => {}", a<d); // a.valeur < d.valeur et a!=d
 	println!("d < a  [ FAUX ] => {}", d<a); // d.valeur > a.valeur et d!=a
-	println!("c < b  [ FAUX ] => {}", c<b); // insignificativement diff�rents
 	println!("b < c  [ FAUX ] => {}", b<c); // insignificativement diff�rents
     println!("");
 
