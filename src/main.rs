@@ -11,11 +11,17 @@ use RMesure::RMesure;
 
 fn main()
 {
-    let U1: RMesure = RMesure::loi(12.05, 0.01, 'R');
-    let U2: RMesure = RMesure::loi(12.10, 0.01, 'R');
-    let U3: RMesure = RMesure::loi(11.93, 0.01, 'R');
+    let      In: RMesure = RMesure::loi(12.00, 0.01, 'R');
+    let mut Out: RMesure = RMesure::loi(00.00, 0.01, 'R');
 
-    let moyenne = (U1 + U2 + U3) / 3.0;
+    let K: RMesure = RMesure::from(0.382);
 
-    println!("moyenne = {moyenne}");
+    println!("Out = {Out}");
+
+    for i in 0..100
+    {
+        Out += K.clone() * (In.clone() - Out.clone());
+        println!("Out {i} = {Out}");
+    }
+
 }
