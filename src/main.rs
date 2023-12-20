@@ -14,14 +14,26 @@ fn main()
     let      In: RMesure = RMesure::loi(12.00, 0.01, 'R');
     let mut Out: RMesure = RMesure::loi(00.00, 0.01, 'R');
 
-    let K: RMesure = RMesure::from(0.382);
+    let K: RMesure = RMesure::from(0.618);
 
     println!("Out = {Out}");
 
-    for i in 0..100
+    let mut i: usize = 0;
+    //for i in 0..100
+    while Out.clone() != In.clone()
     {
+        i += 1;
         Out += K.clone() * (In.clone() - Out.clone());
-        println!("Out {i} = {Out}");
+        println!("Out {i} = {Out} --> {}", Out.clone() == In.clone());
     }
+
+    let In: RMesure = RMesure::loi(0.00, 0.01, 'R');
+    while Out.clone() != In.clone()
+    {
+        i += 1;
+        Out += K.clone() * (In.clone() - Out.clone());
+        println!("Out {i} = {Out} --> {}", Out.clone() == In.clone());
+    }
+
 
 }
