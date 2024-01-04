@@ -7,33 +7,25 @@
 // Ending ta_gueule_le_compilo
 
 use RMesure::RMesure;
+//use ::RMesure::RMESURE_MAX;
 
 
 fn main()
 {
-    let      In: RMesure = RMesure::loi(12.00, 0.01, 'R');
-    let mut Out: RMesure = RMesure::loi(00.00, 0.01, 'R');
-
-    let K: RMesure = RMesure::from(0.618);
+    let     Mes: RMesure = RMesure::loi(12.00, 0.01, 'R');
+    let     Mdl: RMesure = RMesure::loi(00.00,12.0, 'R');
+    let mut Out: RMesure = RMesure::from(0.0);
+    
+    let K: f64 = 0.382;
+    let mut prop: f64 = 0.0;
 
     println!("Out = {Out}");
 
-    let mut i: usize = 0;
-    //for i in 0..100
-    while Out.clone() != In.clone()
+    for i in 0..100
     {
-        i += 1;
-        Out += K.clone() * (In.clone() - Out.clone());
-        println!("Out {i} = {Out} --> {}", Out.clone() == In.clone());
+        
+        Out = prop * Mes.clone() + (1.0 - prop) * Mdl.clone();
+        println!("Out[{i}][{prop}] = {Out} --> {}", Out.clone() == Mes.clone());
+        prop += K * (1.0 - prop);
     }
-
-    let In: RMesure = RMesure::loi(0.00, 0.01, 'R');
-    while Out.clone() != In.clone()
-    {
-        i += 1;
-        Out += K.clone() * (In.clone() - Out.clone());
-        println!("Out {i} = {Out} --> {}", Out.clone() == In.clone());
-    }
-
-
 }
