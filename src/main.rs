@@ -39,7 +39,7 @@ fn main()
     println!("Out[init].Eps() = {}", Out_eq1.Eps());
     println!("Out[init].Eps() = {}", Out_eq2.Eps());
 
-    for k in 0..100
+    for k in 0..25
     {
         let Mes: RMesure = sg_square(periode_square, <i32 as Into<f64>>::into(k) * Te);
 

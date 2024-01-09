@@ -14,7 +14,7 @@ RMesure = { path = "D:\\00 - Dev & Calculs\\Sources_Prog_Perso\\Lib_Rust\\RMesur
 [profile.dev]
 panic = "abort"
 lto = true
-opt-level = 1
+opt-level = 0
 codegen-units = 1
 debug = true
 
