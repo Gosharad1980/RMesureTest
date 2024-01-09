@@ -9,26 +9,65 @@
 use RMesure::RMesure;
 //use ::RMesure::RMESURE_MAX;
 
+fn sg_square(periode: f64, kTe: f64) -> RMesure
+{
+    if (kTe % periode) < (periode/2.0) { return RMesure::loi(12.00,0.01, 'R') }
+    else                               { return RMesure::loi(0.00,0.01, 'R')  }
+}
 
 fn main()
 {
-    let     Mes: RMesure = RMesure::loi(12.00,0.01, 'R');
-    //let mut Out: RMesure = RMesure::loi(00.00,12.0, 'R');
-    let mut Out: RMesure = RMesure::from(0.0);
-    let mut Out_zm1: RMesure = Out.clone();
+    let periode_square: f64 = 4.0_f64;
+    
+    let Mes: RMesure = sg_square(periode_square, 0.0);
+
+    let mut Out_eq1: RMesure = RMesure::loi(00.00,0.01, 'R');
+    let mut Out_eq2: RMesure = Out_eq1.clone();
+    let mut Out_eq1_zm1: RMesure = Out_eq1.clone();
+    let mut Out_eq2_zm1: RMesure = Out_eq2.clone();
     
     let Te = 0.04_f64; // 40ms
     let Tf = 1.0_f64; // 1sec
-    let K: f64 = 1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp();
+    let fac: RMesure = RMesure::from(1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp());
+    //let fac: f64 = 0.90_f64;
 
-    println!("Out = {Out}");
+
+    println!("Out = {Out_eq1}");
     println!("Mes = {Mes}");
-    println!("K   = {K}");
+    println!("fac = {fac}");
 
-    for i in 0..33
+    println!("Out[init].Eps() = {}", Out_eq1.Eps());
+    println!("Out[init].Eps() = {}", Out_eq2.Eps());
+
+    for k in 0..100
     {
-        Out = K * Mes.clone() + (1.0_f64 - K) * Out_zm1.clone();
-        println!("Out[{i}] = {Out} --> {}", Out.clone() == Mes.clone());
-        Out_zm1 = Out.clone();
+        let Mes: RMesure = sg_square(periode_square, <i32 as Into<f64>>::into(k) * Te);
+
+        let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Eps();
+        let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Eps();
+
+        let Uc_droite_eq1: f64 = (fac.clone() *  Mes.clone()                       ).Eps();
+        let Uc_droite_eq2: f64 = (fac.clone() * (Mes.clone() - Out_eq2_zm1.clone())).Eps();
+
+        Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Mes.clone()                       ); // equation 1
+        Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Mes.clone() - Out_eq2_zm1.clone())); // equation 2
+
+        let Uc_finale_eq1 = Out_eq1.Eps();
+        let Uc_finale_eq2 = Out_eq2.Eps(); 
+        
+
+        println!("[{k}]\t{Uc_gauche_eq1}\t{Uc_droite_eq1}\t-->  {Uc_finale_eq1}\t||\t{Out_eq1_zm1}");
+        println!("[{k}]\t{Uc_gauche_eq2}\t{Uc_droite_eq2}\t-->  {Uc_finale_eq2}\t||\t{Out_eq2_zm1}");
+        println!();
+
+        Out_eq1_zm1 = Out_eq1.clone();
+        Out_eq2_zm1 = Out_eq2.clone();
     }
+
+    let R1: RMesure = RMesure::loi(1000.0, 1000.0 * 5.0 / 100.0, 'C');
+    let R2: RMesure = RMesure::loi(1000.0, 1000.0 * 5.0 / 100.0, 'C');
+
+    let Gain: RMesure = 1.0_f64 + (R2 / R1);
+
+    println!("Gain = {Gain}");
 }
