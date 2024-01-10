@@ -7,7 +7,7 @@
 // Ending ta_gueule_le_compilo
 
 use RMesure::RMesure;
-//use ::RMesure::RMESURE_MAX;
+//use ::RMesure::RMesure_MAX;
 
 fn sg_square(periode: f64, kTe: f64) -> RMesure
 {
@@ -19,7 +19,7 @@ fn main()
 {
     let periode_square: f64 = 4.0_f64;
     
-    let Mes: RMesure = sg_square(periode_square, 0.0);
+    let Meas: RMesure = sg_square(periode_square, 0.0);
 
     let mut Out_eq1: RMesure = RMesure::loi(00.00,0.01, 'R');
     let mut Out_eq2: RMesure = Out_eq1.clone();
@@ -29,11 +29,10 @@ fn main()
     let Te = 0.04_f64; // 40ms
     let Tf = 1.0_f64; // 1sec
     let fac: RMesure = RMesure::from(1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp());
-    //let fac: f64 = 0.90_f64;
 
 
     println!("Out = {Out_eq1}");
-    println!("Mes = {Mes}");
+    println!("Meas = {Meas}");
     println!("fac = {fac}");
 
     println!("Out[init].Uc() = {}", Out_eq1.Uc());
@@ -41,16 +40,16 @@ fn main()
 
     for k in 0..25
     {
-        let Mes: RMesure = sg_square(periode_square, <i32 as Into<f64>>::into(k) * Te);
+        let Meas: RMesure = sg_square(periode_square, <i32 as Into<f64>>::into(k) * Te);
 
         let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Uc();
         let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Uc();
 
-        let Uc_droite_eq1: f64 = (fac.clone() *  Mes.clone()                       ).Uc();
-        let Uc_droite_eq2: f64 = (fac.clone() * (Mes.clone() - Out_eq2_zm1.clone())).Uc();
+        let Uc_droite_eq1: f64 = (fac.clone() *  Meas.clone()                       ).Uc();
+        let Uc_droite_eq2: f64 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Uc();
 
-        Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Mes.clone()                       ); // equation 1
-        Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Mes.clone() - Out_eq2_zm1.clone())); // equation 2
+        Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
+        Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())); // equation 2
 
         let Uc_finale_eq1 = Out_eq1.Uc();
         let Uc_finale_eq2 = Out_eq2.Uc(); 
