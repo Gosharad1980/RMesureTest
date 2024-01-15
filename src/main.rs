@@ -30,29 +30,28 @@ fn main()
     let Tf = 1.0_f64; // 1sec
     let fac: RMesure = RMesure::from(1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp());
 
-
     println!("Out = {Out_eq1}");
     println!("Meas = {Meas}");
     println!("fac = {fac}");
 
-    println!("Out[init].Uc() = {}", Out_eq1.Uc());
-    println!("Out[init].Uc() = {}", Out_eq2.Uc());
+    println!("Out[init].Uc() = {}", Out_eq1.Eps());
+    println!("Out[init].Uc() = {}", Out_eq2.Eps());
 
-    for k in 0..25
+    for k in 0..100
     {
         let Meas: RMesure = sg_square(periode_square, <i32 as Into<f64>>::into(k) * Te);
 
-        let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Uc();
-        let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Uc();
+        let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Eps();
+        let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Eps();
 
-        let Uc_droite_eq1: f64 = (fac.clone() *  Meas.clone()                       ).Uc();
-        let Uc_droite_eq2: f64 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Uc();
+        let Uc_droite_eq1: f64 = (fac.clone() *  Meas.clone()                       ).Eps();
+        let Uc_droite_eq2: f64 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Eps();
 
         Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
         Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())); // equation 2
 
-        let Uc_finale_eq1 = Out_eq1.Uc();
-        let Uc_finale_eq2 = Out_eq2.Uc(); 
+        let Uc_finale_eq1 = Out_eq1.Eps();
+        let Uc_finale_eq2 = Out_eq2.Eps(); 
         
 
         println!("[{k}]\t{Uc_gauche_eq1}\t{Uc_droite_eq1}\t-->  {Uc_finale_eq1}\t||\t{Out_eq1_zm1}");
