@@ -2,7 +2,7 @@
 #![allow(non_snake_case)]
 #![allow(non_camel_case_types)]
 #![allow(unused_variables)]
-//#![allow(dead_code)]
+#![allow(dead_code)]
 #![allow(unused_assignments)]
 // Ending ta_gueule_le_compilo
 
@@ -15,7 +15,7 @@ fn sg_square(periode: f64, kTe: f64) -> RMesure
     else                               { return RMesure::loi(0.00,0.01, 'R')  }
 }
 
-fn main()
+fn test_incertitude_filtrage_prem_ordre()
 {
     let periode_square: f64 = 4.0_f64;
     
@@ -29,6 +29,7 @@ fn main()
     let Te = 0.04_f64; // 40ms
     let Tf = 1.0_f64; // 1sec
     let fac: RMesure = RMesure::from(1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp());
+
 
     println!("Out = {Out_eq1}");
     println!("Meas = {Meas}");
@@ -61,11 +62,24 @@ fn main()
         Out_eq1_zm1 = Out_eq1.clone();
         Out_eq2_zm1 = Out_eq2.clone();
     }
+}
 
-    let R1: RMesure = RMesure::loi(1000.0, 1000.0 * 5.0 / 100.0, 'C');
-    let R2: RMesure = RMesure::loi(1000.0, 1000.0 * 5.0 / 100.0, 'C');
+fn main()
+{
+   
+    // test_incertitude_filtrage_prem_ordre();
 
-    let Gain: RMesure = 1.0_f64 + (R2 / R1);
+    let valfloat: f64 = 1.0_f64.sqrt();
 
-    println!("Gain = {Gain}");
+    let fc: RMesure = RMesure::scalaire(250000_f64);
+    let Ct: RMesure = RMesure::loi(0.000000001_f64, 0.000000001_f64 * 20.0_f64 / 100.0_f64,'C');
+
+    let Rt: RMesure = 1.0_f64 / (fc.clone() * Ct.clone());
+    let ft: RMesure = 1.0_f64 / (Rt.clone() * Ct.clone());
+
+    println!("fc = {fc}");
+    println!("Ct = {Ct}");
+    println!("Rt = {Rt}");
+    println!("ft = {ft}");
+
 }
