@@ -10,6 +10,7 @@
 use RMesure::RMesure;
 //use ::RMesure::RMesure_MAX;
 
+
 fn sg_square(periode: f32, kTe: f32) -> RMesure
 {
     if (kTe % periode) < (periode/2.0) { RMesure::loi(12.00,0.01, 'R') }
@@ -67,7 +68,7 @@ fn test_incertitude_filtrage_prem_ordre()
 
 fn main()
 {
-   
+  
     // test_incertitude_filtrage_prem_ordre();
 
     let fc: RMesure = RMesure::scalaire(250_000_f32);
