@@ -11,7 +11,7 @@ use RMesure::RMesure;
 //use ::RMesure::RMesure_MAX;
 
 
-fn sg_square(periode: f32, kTe: f32) -> RMesure
+fn sg_square(periode: f64, kTe: f64) -> RMesure
 {
     if (kTe % periode) < (periode/2.0) { RMesure::loi(12.00,0.01, 'R') }
     else                               { RMesure::loi(0.00,0.01, 'R')  }
@@ -19,7 +19,7 @@ fn sg_square(periode: f32, kTe: f32) -> RMesure
 
 fn test_incertitude_filtrage_prem_ordre()
 {
-    let periode_square: f32 = 4.0_f32;
+    let periode_square: f64 = 4.0_f64;
     
     let Meas: RMesure = sg_square(periode_square, 0.0);
 
@@ -28,9 +28,9 @@ fn test_incertitude_filtrage_prem_ordre()
     let mut Out_eq1_zm1: RMesure = Out_eq1.clone();
     let mut Out_eq2_zm1: RMesure = Out_eq2.clone();
     
-    let Te = 0.04_f32; // 40ms
-    let Tf = 1.0_f32; // 1sec
-    let fac: RMesure = RMesure::from(1.0_f32 - (-2.0_f32 * 3.14159_f32 * Te/Tf).exp());
+    let Te = 0.04_f64; // 40ms
+    let Tf = 1.0_f64; // 1sec
+    let fac: RMesure = RMesure::from(1.0_f64 - (-2.0_f64 * 3.14159_f64 * Te/Tf).exp());
 
 
     println!("Out = {Out_eq1}");
@@ -42,15 +42,15 @@ fn test_incertitude_filtrage_prem_ordre()
 
     for NumIteration in 0..100
     {
-        let Meas: RMesure = sg_square(periode_square, <i16 as Into<f32>>::into(NumIteration) * Te);
+        let Meas: RMesure = sg_square(periode_square, <i16 as Into<f64>>::into(NumIteration) * Te);
 
-        let Uc_gauche_eq1: f32 = ((1.0_f32 - fac.clone()) * Out_eq1_zm1.clone()).Eps();
-        let Uc_gauche_eq2: f32 =                            Out_eq2_zm1.clone().Eps();
+        let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Eps();
+        let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Eps();
 
-        let Uc_droite_eq1: f32 = (fac.clone() *  Meas.clone()                       ).Eps();
-        let Uc_droite_eq2: f32 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Eps();
+        let Uc_droite_eq1: f64 = (fac.clone() *  Meas.clone()                       ).Eps();
+        let Uc_droite_eq2: f64 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Eps();
 
-        Out_eq1 = ((1.0_f32 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
+        Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
         Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())); // equation 2
 
         let Uc_finale_eq1 = Out_eq1.Eps();
@@ -71,10 +71,10 @@ fn main()
   
     // test_incertitude_filtrage_prem_ordre();
 
-    let fc: RMesure = RMesure::scalaire(250_000_f32);
-    let Ct: RMesure = RMesure::loi(0.000_000_001_f32, 20.0_f32,'P');
+    let fc: RMesure = RMesure::scalaire(250_000_f64);
+    let Ct: RMesure = RMesure::loi(0.000_000_001_f64, 20.0_f64,'P');
 
-    let Rt: RMesure = 1.0_f32 / (fc.clone() * Ct.clone());
+    let Rt: RMesure = 1.0_f64 / (fc.clone() * Ct.clone());
 
     println!("fc = {fc}");
     println!("Ct = {Ct}");
@@ -83,7 +83,7 @@ fn main()
     let Rt: RMesure = RMesure::loi(Rt.Val(), 5.0,'P');
     println!("Rt = {Rt}");
 
-    let ft: RMesure = 1.0_f32 / (Rt.clone() * Ct.clone());
+    let ft: RMesure = 1.0_f64 / (Rt.clone() * Ct.clone());
     println!("ft = {ft}");
 
     println!("Rt.log10() = {}", Rt.clone().log10());
