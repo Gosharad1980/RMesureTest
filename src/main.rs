@@ -66,15 +66,14 @@ fn test_incertitude_filtrage_prem_ordre()
     }
 }
 
-fn main()
+fn test_incertitude_U_egal_RI()
 {
-  
-    // test_incertitude_filtrage_prem_ordre();
-
-    let fc: RMesure = RMesure::scalaire(250_000_f64);
+    let fc: RMesure = 250_000_f64.into();
     let Ct: RMesure = RMesure::loi(0.000_000_001_f64, 20.0_f64,'P');
 
     let Rt: RMesure = 1.0_f64 / (fc.clone() * Ct.clone());
+
+    let trois: RMesure = RMesure::loi(27.0_f64, 1.0_f64, 'R');
 
     println!("fc = {fc}");
     println!("Ct = {Ct}");
@@ -87,5 +86,11 @@ fn main()
     println!("ft = {ft}");
 
     println!("Rt.log10() = {}", Rt.clone().log10());
-    println!("Rt.cbrt() = {}", Rt.clone().cbrt());
+    println!("trois = {}", trois.cbrt().log2());
+}
+
+fn main()
+{
+    test_incertitude_filtrage_prem_ordre();
+    test_incertitude_U_egal_RI();
 }
