@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 RMesure = { path = "D:\\00 - Dev & Calculs\\Sources_Prog_Perso\\Lib_Rust\\RMesure", version = "^2.0.0" }
+#RMesure = { path = "D:\\00 - Dev & Calculs\\Sources_Prog_Perso\\Lib_Rust\\RMesure", version = "^2.0.0", features = ["MagicEverywhere"] }
 
 # Configure the build for minimal size - AVRs have very little program memory
 [profile.dev]

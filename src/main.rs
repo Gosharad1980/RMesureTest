@@ -7,7 +7,8 @@
 // Ending ta_gueule_le_compilo
 
 
-use RMesure::RMesure;
+use RMesure::RMesure as RMesure;
+
 //use ::RMesure::RMesure_MAX;
 
 
@@ -91,6 +92,6 @@ fn test_incertitude_U_egal_RI()
 
 fn main()
 {
-    test_incertitude_filtrage_prem_ordre();
+    //test_incertitude_filtrage_prem_ordre();
     test_incertitude_U_egal_RI();
 }
