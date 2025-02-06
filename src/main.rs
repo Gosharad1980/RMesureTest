@@ -22,7 +22,7 @@ fn test_incertitude_filtrage_prem_ordre()
 {
     let periode_square: f64 = 4.0_f64;
     
-    let Meas: RMesure = sg_square(periode_square, 0.0);
+    let mut Meas: RMesure = sg_square(periode_square, 0.0);
 
     let mut Out_eq1: RMesure = RMesure::loi(00.00,0.01, 'R');
     let mut Out_eq2: RMesure = Out_eq1.clone();
@@ -43,23 +43,14 @@ fn test_incertitude_filtrage_prem_ordre()
 
     for NumIteration in 0..100
     {
-        let Meas: RMesure = sg_square(periode_square, <i16 as Into<f64>>::into(NumIteration) * Te);
-
-        let Uc_gauche_eq1: f64 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()).Eps();
-        let Uc_gauche_eq2: f64 =                            Out_eq2_zm1.clone().Eps();
-
-        let Uc_droite_eq1: f64 = (fac.clone() *  Meas.clone()                       ).Eps();
-        let Uc_droite_eq2: f64 = (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())).Eps();
+        Meas = sg_square(periode_square, <i16 as Into<f64>>::into(NumIteration) * Te);
 
         Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
         Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())); // equation 2
 
-        let Uc_finale_eq1 = Out_eq1.Eps();
-        let Uc_finale_eq2 = Out_eq2.Eps(); 
-        
 
-        println!("[{NumIteration}]\t{Uc_gauche_eq1}\t{Uc_droite_eq1}\t-->  {Uc_finale_eq1}\t||\t{Out_eq1_zm1}");
-        println!("[{NumIteration}]\t{Uc_gauche_eq2}\t{Uc_droite_eq2}\t-->  {Uc_finale_eq2}\t||\t{Out_eq2_zm1}");
+        println!("[{NumIteration}]\t-->\t{Meas}\t{Out_eq1_zm1}");
+        println!("[{NumIteration}]\t-->\t{Meas}\t{Out_eq2_zm1}");
         println!();
 
         Out_eq1_zm1 = Out_eq1.clone();
@@ -80,10 +71,10 @@ fn test_incertitude_U_egal_RI()
     println!("Ct = {Ct}");
     println!("Rt = {Rt}");
 
-    let Rt: RMesure = RMesure::loi(Rt.Val(), 5.0,'P');
-    println!("Rt = {Rt}");
+    let R1: RMesure = RMesure::loi(Rt.Val(), 5.0,'P');
+    println!("R1 = {R1}");
 
-    let ft: RMesure = 1.0_f64 / (Rt.clone() * Ct.clone());
+    let ft: RMesure = 1.0_f64 / (R1.clone() * Ct.clone());
     println!("ft = {ft}");
 
     println!("Rt.log10() = {}", Rt.clone().log10());
