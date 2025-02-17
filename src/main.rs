@@ -25,9 +25,9 @@ fn test_incertitude_filtrage_prem_ordre()
 	let mut Meas: RMesure = sg_square(periode_square, 0.0);
 
 	let mut Out_eq1: RMesure = RMesure::loi(00.00,0.01, 'R');
-	let mut Out_eq2: RMesure = Out_eq1.clone();
-	let mut Out_eq1_zm1: RMesure = Out_eq1.clone();
-	let mut Out_eq2_zm1: RMesure = Out_eq2.clone();
+	let mut Out_eq2: RMesure = Out_eq1;
+	let mut Out_eq1_zm1: RMesure = Out_eq1;
+	let mut Out_eq2_zm1: RMesure = Out_eq2;
 
 	let Te = 0.04_f64; // 40ms
 	let Tf = 1.0_f64; // 1sec
@@ -41,20 +41,30 @@ fn test_incertitude_filtrage_prem_ordre()
 	println!("Out[init].Uc() = {}", Out_eq1.Eps());
 	println!("Out[init].Uc() = {}", Out_eq2.Eps());
 
+	println!();
+	println!();
+	println!("======= -->     ======================================  =====================================================");
+	println!("[i]     -->     (Mesure +/- IT               | 95.45%)  (Out filtre        +/- IT                   | 95.45%)");
+	println!("======= -->     ======================================  =====================================================");
+	println!();
+
 	for NumIteration in 0..100
 	{
 		Meas = sg_square(periode_square, <i16 as Into<f64>>::into(NumIteration) * Te);
+		
+		// version distribuée --> incertitude de Out converge
+		Out_eq1 = ((1.0_f64 - fac) * Out_eq1_zm1) + (fac *  Meas);
 
-		Out_eq1 = ((1.0_f64 - fac.clone()) * Out_eq1_zm1.clone()) + (fac.clone() *  Meas.clone()                       ); // equation 1
-		Out_eq2 = (                          Out_eq2_zm1.clone()) + (fac.clone() * (Meas.clone() - Out_eq2_zm1.clone())); // equation 2
+		// version factorisée --> incertitude de Out diverge
+		Out_eq2 = (Out_eq2_zm1) + (fac * (Meas - Out_eq2_zm1));
 
 
 		println!("[{NumIteration}]\t-->\t{Meas}\t{Out_eq1_zm1}");
 		println!("[{NumIteration}]\t-->\t{Meas}\t{Out_eq2_zm1}");
 		println!();
 
-		Out_eq1_zm1 = Out_eq1.clone();
-		Out_eq2_zm1 = Out_eq2.clone();
+		Out_eq1_zm1 = Out_eq1;
+		Out_eq2_zm1 = Out_eq2;
 	}
 }
 
@@ -64,7 +74,7 @@ fn test_incertitude_U_egal_RI()
 	let Ct: RMesure = RMesure::loi(0.000_000_001_f64, 10.0_f64,'P');
 
 
-	let Rt: RMesure = 1.0_f64 / (fc.clone() * Ct.clone());
+	let Rt: RMesure = 1.0_f64 / (fc * Ct);
 
 
 	println!("fc = {fc}");
@@ -74,7 +84,7 @@ fn test_incertitude_U_egal_RI()
 	let R1: RMesure = RMesure::loi(Rt.Val(), 5.0,'P');
 	println!("R1 = {R1}");
 
-	let ft: RMesure = 1.0_f64 / (R1.clone() * Ct.clone());
+	let ft: RMesure = 1.0_f64 / (R1 * Ct);
 	println!("ft = {ft}");
 }
 

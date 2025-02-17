@@ -5,8 +5,8 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
-RMesure = { git = "https://github.com/Gosharad1980/RMesure.git" }
-#RMesure = { git = "https://github.com/Gosharad1980/RMesure.git", features = ["MagicEverywhere"] }
+# RMesure = { git = "https://github.com/Gosharad1980/RMesure.git" }
+RMesure = { git = "https://github.com/Gosharad1980/RMesure.git", features = ["MagicEverywhere"] }
 
 # Configure the build for minimal size - AVRs have very little program memory
 [profile.dev]
