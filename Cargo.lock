@@ -5,7 +5,7 @@ version = 4
 [[package]]
 name = "RMesure"
 version = "2.0.0"
-source = "git+https://github.com/Gosharad1980/RMesure.git#11df667430b5083fc0029afa1103c344640e42b9"
+source = "git+https://github.com/Gosharad1980/RMesure.git#99a29844d8a609e1e20cbc4aef4237873c6e5a99"
 
 [[package]]
 name = "RMesureTest"

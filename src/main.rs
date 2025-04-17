@@ -88,8 +88,20 @@ fn test_incertitude_U_egal_RI()
 	println!("ft = {ft}");
 }
 
+fn test_pValue()
+{
+	let d: RMesure = RMesure::new(1.5_f64, 0.1_f64, 95.45_f64);
+	let e: RMesure = RMesure::new(0.1_f64, 1.0_f64, 95.45_f64);
+
+	let pValue = d.pValue();
+	println!("d = {d}\tpValue = {pValue}");
+	let pValue = e.pValue();
+	println!("e = {e}\tpValue = {pValue}");
+}
+
 fn main()
 {
-	//test_incertitude_filtrage_prem_ordre();
-	test_incertitude_U_egal_RI();
+	// test_incertitude_filtrage_prem_ordre();
+	// test_incertitude_U_egal_RI();
+	test_pValue();
 }
