@@ -90,8 +90,8 @@ fn test_incertitude_U_egal_RI()
 
 fn test_pValue()
 {
-	let d: RMesure = RMesure::new(1.5_f64, 0.1_f64, 95.45_f64);
-	let e: RMesure = RMesure::new(0.1_f64, 1.0_f64, 95.45_f64);
+	let d: RMesure = RMesure::loi(1.5_f64, 0.1_f64, 'N');
+	let e: RMesure = RMesure::loi(0.1_f64, 1.0_f64, 'N');
 
 	let pValue = d.pValue();
 	println!("d = {d}\tpValue = {pValue}");
