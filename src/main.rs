@@ -70,22 +70,16 @@ fn test_incertitude_filtrage_prem_ordre()
 
 fn test_incertitude_U_egal_RI()
 {
-	let fc: RMesure = 250_000_f64.into();
-	let Ct: RMesure = RMesure::loi(0.000_000_001_f64, 10.0_f64,'P');
+	let U: RMesure = 5.0_f64.into(); // 5.0 Volts
+	let R: RMesure = RMesure::loi(300.0_f64, 10.0_f64,'P'); // 300 ohm +/- 10%
 
 
-	let Rt: RMesure = 1.0_f64 / (fc * Ct);
+	let I: RMesure = U / R; // Ampères
 
 
-	println!("fc = {fc}");
-	println!("Ct = {Ct}");
-	println!("Rt = {Rt}");
-
-	let R1: RMesure = RMesure::loi(Rt.Val(), 5.0,'P');
-	println!("R1 = {R1}");
-
-	let ft: RMesure = 1.0_f64 / (R1 * Ct);
-	println!("ft = {ft}");
+	println!("U = {U}");
+	println!("R = {R}");
+	println!("I = {I}");
 }
 
 fn test_pValue()
@@ -102,6 +96,6 @@ fn test_pValue()
 fn main()
 {
 	// test_incertitude_filtrage_prem_ordre();
-	// test_incertitude_U_egal_RI();
-	test_pValue();
+	test_incertitude_U_egal_RI();
+	// test_pValue();
 }
